@@ -1,8 +1,8 @@
 {
-    "name": "lmlsna/php-bitcoin",
+    "name": "lmlsna/php-bitcoind",
     "autoload": {
-        "psr-0" : {
-            "phpBitcoin" : ""
+        "psr-4" : {
+            "lmlsna\bitcoind" : ""
         }
     }
 }

@@ -1,14 +1,19 @@
 <?php
 
+namespace 'lmlsna';
+
+Class bitcoind {
+
 /**
- * JSONRPC 1.0/2.0 function wrapper using PHP-CURL
+ * Simple PHp library for thw Bitcoin/Litecoin JSON-RPC 1.0/2.0 protocol function
+ * powered by cURL
  *
- * This is a simple, single-function, jsonrpc 2.0 spec valid, wrapper for
- * PHP. It reqires the php-curl module to be installed and enabled in PHP.
+ * This is a simple, single-function, jsonrpc 1.0/2.0 PHP  wrapper for
+ * bitcoind style daemons. It reqires the php-curl module to be installed.
  *
  * There are several MUCH more verbose jsonrpc wrappers for PHP, but
- * this straight-forward implementation is just fine for almost every
- * jsonrpc related thing you want to do in PHP (actually probably overkill).
+ * this straight-forward implementation is probably just fine for almost every
+ * jsonrpc related thing you want to do in PHP (actually maybe overkill).
  *
  * The fumction takes 1 required, and 4 optional rpc arguments. A sane and
  * spec compliant default of the current epoch time is used for 'id'
@@ -31,7 +36,13 @@
  *     $obj = jsonrpc('getblockhash', 1 ); // also works
  */
 
-function jsonrpc( $method, $params=array(), $id='', $jsonrpc='1.0') {
+private $rpcuser = 'rpc_username';
+private $prcpass = 'rpc_password';
+private $rpchost = '127.0.0.1';
+private $rpcport = 9332;
+private $rpcproto = 'http';
+
+public function jsonrpc( $method, $params=array(), $id='', $jsonrpc='1.0') {
   /** rpc query struct */
   $q = (object) [
     'method' => trim($method),
@@ -45,14 +56,14 @@ function jsonrpc( $method, $params=array(), $id='', $jsonrpc='1.0') {
   curl_setopt_array( $ch, array(
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POST           => true,
-    CURLOPT_USERPWD        => BTC_RPC_USER . ( empty(BTC_RPC_PWD) ? '' : ':' . BTC_RPC_PWD ),
+    CURLOPT_USERPWD        => $this->rpcuser . ( empty$this->rpcpass) ? '' : ':' . $this->rpcpass),
     CURLOPT_POSTFIELDS     => $q_json,
     CURLOPT_ENCODING       => 'application/json',
     CURLOPT_HTTPAUTH       => CURLAUTH_BASIC,
     CURLOPT_URL            => sprintf( '%s://%s%s',
-      BTC_RPC_PROTO,
-      BTC_RPC_HOST,
-      ( empty(BTC_RPC_PORT) ? '' : ':' . BTC_RPC_PORT )
+      $this->rpcproto,
+      $this->rpcport,
+      ( empty($this->rpcport) ? '' : ':' . $this->rpcport )
     )
   ));
 
@@ -71,3 +82,4 @@ function getnewaddress( $account='' ) {
 }
 
 
+}
