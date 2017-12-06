@@ -2,7 +2,7 @@
     "name": "lmlsna/php-bitcoin",
     "autoload": {
         "psr-0" : {
-            "lmlsna\\phpBitcoin" : "src"
+            "phpBitcoin" : ""
         }
     }
 }
